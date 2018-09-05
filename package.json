@@ -1,0 +1,23 @@
+{
+  "name": "web-dev-project-api",
+  "version": "1.0.0",
+  "description": "An API for the web project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomikonio/web-dev-project-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomikonio/web-dev-project-api/issues"
+  },
+  "homepage": "https://github.com/tomikonio/web-dev-project-api#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3"
+  }
+}
