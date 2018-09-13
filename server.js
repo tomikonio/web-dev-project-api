@@ -27,7 +27,7 @@ const database = {
 };
 
 app.get("/", (req, res) => {
-  res.send("this is working");
+  res.json(database.users);
 });
 
 app.post("/signin", (req, res) => {
@@ -52,6 +52,31 @@ app.post("/register", (req, res) => {
     joined: new Date()
   });
   res.json(database.users[database.users.length - 1]);
+});
+
+app.get("/profile/:id", (req, res) => {
+  let found = false;
+  const { id } = req.params;
+  database.users.forEach(user => {
+    if (user.id === id) {
+      found = true;
+      res.json(user);
+    }
+  });
+  if (!found) res.status(404).json("user not found");
+});
+
+app.put("/image", (req, res) => {
+  let found = false;
+  const { id } = req.body;
+  database.users.forEach(user => {
+    if (user.id === id) {
+      user.entries++;
+      found = true;
+      res.json(user.entries);
+    }
+  });
+  if (!found) res.status(404).json("user not found");
 });
 
 app.listen(3000, () => {
