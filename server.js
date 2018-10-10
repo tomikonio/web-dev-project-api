@@ -1,32 +1,43 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const knex = require("knex");
+
+const database = knex({
+  client: "pg",
+  connection: {
+    host: "127.0.0.1",
+    user: "igor",
+    password: "",
+    database: "smart"
+  }
+});
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
 
-const database = {
-  users: [
-    {
-      id: "123",
-      name: "John",
-      email: "john@gmail.com",
-      password: "john",
-      entries: 0,
-      joined: new Date()
-    },
-    {
-      id: "124",
-      name: "shushu",
-      email: "shushu@gmail.com",
-      password: "shushu",
-      entries: 0,
-      joined: new Date()
-    }
-  ]
-};
+// const database = {
+//   users: [
+//     {
+//       id: "123",
+//       name: "John",
+//       email: "john@gmail.com",
+//       password: "john",
+//       entries: 0,
+//       joined: new Date()
+//     },
+//     {
+//       id: "124",
+//       name: "shushu",
+//       email: "shushu@gmail.com",
+//       password: "shushu",
+//       entries: 0,
+//       joined: new Date()
+//     }
+//   ]
+// };
 
 app.get("/", (req, res) => {
   res.json(database.users);
