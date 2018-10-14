@@ -71,7 +71,6 @@ app.post("/register", (req, res) => {
 });
 
 app.get("/profile/:id", (req, res) => {
-  let found = false;
   const { id } = req.params;
   db.select("*")
     .from("users")
