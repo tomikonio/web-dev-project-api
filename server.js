@@ -3,12 +3,12 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const knex = require("knex");
 
-const database = knex({
+const db = knex({
   client: "pg",
   connection: {
     host: "127.0.0.1",
     user: "igor",
-    password: "",
+    password: "1234",
     database: "smart"
   }
 });
@@ -18,26 +18,26 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-// const database = {
-//   users: [
-//     {
-//       id: "123",
-//       name: "John",
-//       email: "john@gmail.com",
-//       password: "john",
-//       entries: 0,
-//       joined: new Date()
-//     },
-//     {
-//       id: "124",
-//       name: "shushu",
-//       email: "shushu@gmail.com",
-//       password: "shushu",
-//       entries: 0,
-//       joined: new Date()
-//     }
-//   ]
-// };
+const database = {
+  users: [
+    {
+      id: "123",
+      name: "John",
+      email: "john@gmail.com",
+      password: "john",
+      entries: 0,
+      joined: new Date()
+    },
+    {
+      id: "124",
+      name: "shushu",
+      email: "shushu@gmail.com",
+      password: "shushu",
+      entries: 0,
+      joined: new Date()
+    }
+  ]
+};
 
 app.get("/", (req, res) => {
   res.json(database.users);
@@ -57,15 +57,17 @@ app.post("/signin", (req, res) => {
 
 app.post("/register", (req, res) => {
   const { name, email, password } = req.body;
-  database.users.push({
-    id: "125",
-    name: name,
-    email: email,
-    password: password,
-    entries: 0,
-    joined: new Date()
-  });
-  res.json(database.users[database.users.length - 1]);
+  db("users")
+    .insert({
+      email: email,
+      name: name,
+      joined: new Date()
+    })
+    .returning("*")
+    .then(user => {
+      res.json(user[0]);
+    })
+    .catch(err => res.status(400).json("unable to register"));
 });
 
 app.get("/profile/:id", (req, res) => {
